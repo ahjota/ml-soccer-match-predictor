@@ -1,5 +1,5 @@
 library(readr)
-allSpi <- read_csv("/Users/aj/workspace/ml-spi-demo/spi_matches.csv")
+allSpi <- read_csv("/Users/aj/workspace/ml-soccer-match-predictor/spi_matches.csv")
 spec(allSpi)
 is(allSpi)
 is(allSpi$date)
@@ -49,7 +49,7 @@ spi2019train %<>%
 spi2019train
 
 if(count(spi2019train) == 2 * count(spi2019clean)) {
-  write_csv(spi2019train, "/Users/aj/workspace/ml-spi-demo/spi-2019-training-set.csv")
+  write_csv(spi2019train, "/Users/aj/workspace/ml-soccer-match-predictor/spi-2019-training-set.csv")
 }
 
 spi2020clean <- spi2020raw %>%
@@ -75,7 +75,7 @@ spi2020actual <- 1:length(spi2020clean$season) %>%
   rename(team1 = team2, team2 = team1, spi1 = spi2, spi2 = spi1, score1 = score2) %>%
   add_row(spi2020actual, .)
 if(count(spi2020actual) == 2 * count(spi2020clean)) {
-  write_csv(spi2020actual, "/Users/aj/workspace/ml-spi-demo/spi-2020-actuals.csv")
+  write_csv(spi2020actual, "/Users/aj/workspace/ml-soccer-match-predictor/spi-2020-actuals.csv")
 }
 library(tibble)
 spi2020actual %>%
@@ -83,4 +83,4 @@ spi2020actual %>%
   arrange(aid)
 spi2020externaltest <- spi2020actual %>%select(!score1)
 spi2020externaltest
-write_csv(spi2020externaltest, "/Users/aj/workspace/ml-spi-demo/spi-2020-external-test.csv")
+write_csv(spi2020externaltest, "/Users/aj/workspace/ml-soccer-match-predictor/spi-2020-external-test.csv")
