@@ -74,13 +74,14 @@ spi2020actual <- 1:length(spi2020clean$season) %>%
   select(season, date, league, team2, team1, spi2, spi1, score2) %>%
   rename(team1 = team2, team2 = team1, spi1 = spi2, spi2 = spi1, score1 = score2) %>%
   add_row(spi2020actual, .)
+spi2020actual %<>%
+  add_column(aid = paste(spi2020actual$date, spi2020actual$league, spi2020actual$team1, spi2020actual$team2)) %>%
+  arrange(aid)
+
 if(count(spi2020actual) == 2 * count(spi2020clean)) {
   write_csv(spi2020actual, "/Users/aj/workspace/ml-soccer-match-predictor/spi-2020-actuals.csv")
 }
 library(tibble)
-spi2020actual %>%
-  add_column(aid = paste(spi2020actual$date, spi2020actual$league, spi2020actual$team1, spi2020actual$team2)) %>%
-  arrange(aid)
 spi2020externaltest <- spi2020actual %>%select(!score1)
 spi2020externaltest
 write_csv(spi2020externaltest, "/Users/aj/workspace/ml-soccer-match-predictor/spi-2020-external-test.csv")
